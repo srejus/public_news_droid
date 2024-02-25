@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from news.models import News
+from news.models import News,Comment
 from accounts.models import Account
 
 # Create your views here.
@@ -12,9 +12,25 @@ class IndexView(View):
         news = News.objects.all().order_by('-id')
         if id:
             news = news.get(id=id)
-            return render(request,'single_news.html',{'news':news})
+            if request.user.is_authenticated:
+                acc = Account.objects.get(user=request.user).user_type
+            else:
+                acc = None
+            comments = Comment.objects.filter(news=news).order_by('-id')
+            return render(request,'single_news.html',{'news':news,'acc':acc,'comments':comments})
         
-        return render(request,'index.html',{'all_news':news})
+        msg = request.GET.get("msg")
+        return render(request,'index.html',{'all_news':news,'msg':msg})
+
+    def post(self,request,id=None):
+        comment = request.POST.get("comment")
+
+        news = News.objects.get(id=id)
+        acc = Account.objects.get(user=request.user)
+        Comment.objects.create(commented_by=acc,news=news,comment=comment)
+        
+        return redirect(f"/{id}")
+        
     
 
 @method_decorator(login_required, name='dispatch')

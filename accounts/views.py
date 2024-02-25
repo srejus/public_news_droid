@@ -70,6 +70,12 @@ class SignupView(View):
         return redirect("/accounts/login")
     
 
+class LogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("/")
+    
+
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     def get(self,request):

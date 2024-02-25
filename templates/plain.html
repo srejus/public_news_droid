@@ -82,11 +82,15 @@
                     <div class="col-lg-4 hidden-md-down">
                         <div class="topmenu text-center">
                             <ul class="list-inline">
-                                <li class="list-inline-item"><a href="#"><i class="fa fa-star"></i> Trends</a></li>
                                 <li class="list-inline-item"><a href="#"><i class="fa fa-bolt"></i> Hot Topics</a></li>
                                 <li class="list-inline-item"><a href="/news/post"><i class="fa fa-pencil"></i> Write for us</a></li>
-                                <li class="list-inline-item"><a href="/accounts/profile"><i class="fa fa-user-circle-o"></i> Profile</a></li>
-                            </ul><!-- end ul -->
+<li class="list-inline-item"><a href="/accounts/profile"><i class="fa fa-user-circle-o"></i> Profile</a></li>
+
+                                {% if request.user.is_authenticated %}
+                                <li class="list-inline-item"><a href="/accounts/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
+                                {% else %}
+                                <li class="list-inline-item"><a href="/accounts/login/"><i class="fa fa-sign-in"></i> Login</a></li>
+                                {% endif %}                            </ul><!-- end ul -->
                         </div><!-- end topmenu -->
                     </div><!-- end col -->
 
