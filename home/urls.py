@@ -7,3 +7,4 @@ urlpatterns = [
     path('reporter/',ReporterIndexView.as_view()),
 
 ]
+
