@@ -56,8 +56,8 @@
         <div class="collapse top-search" id="collapseExample">
             <div class="card card-block">
                 <div class="newsletter-widget text-center">
-                    <form class="form-inline">
-                        <input type="text" class="form-control" placeholder="What you are looking for?">
+                    <form class="form-inline" action="/search">
+                        <input type="text" name="term" class="form-control" placeholder="What you are looking for?">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </form>
                 </div><!-- end newsletter -->
@@ -123,22 +123,17 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-md-center" id="Public News Droidmenu">
                         <ul class="navbar-nav">
-                            <li class="nav-item">
+                           <li class="nav-item">
                                 <a class="nav-link color-pink-hover" href="/">Home</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link color-pink-hover" href="/accounts/profile">Profile</a>
+                            </li>
+
+                           
                             
-                            <li class="nav-item">
-                                <a class="nav-link color-pink-hover" href="blog-category-01.html">Fashion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link color-red-hover" href="blog-category-02.html">Food</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link color-aqua-hover" href="blog-category-03.html">Lifestyle</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link color-green-hover" href="blog-category-04.html">Travel</a>
-                            </li>  
+        
                         </ul>
                     </div>
                 </nav>

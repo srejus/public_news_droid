@@ -38,13 +38,13 @@ class IndexView(View):
         if id:
             news = news.get(id=id)
             if request.user.is_authenticated:
-                acc = Account.objects.get(user=request.user).user_type
+                acc = Account.objects.get(user=request.user)
             else:
                 acc = None
             comments = Comment.objects.filter(news=news).order_by('-id')
-            if news.is_fake == False:
-                x = self.detect_fake(comments,news)
-                print("X Value " ,x)
+            x = self.detect_fake(comments,news)
+            print("X Value " ,x)
+            
             return render(request,'single_news.html',{'news':news,'acc':acc,'comments':comments})
         
         msg = request.GET.get("msg")
@@ -58,6 +58,31 @@ class IndexView(View):
         Comment.objects.create(commented_by=acc,news=news,comment=comment)
         
         return redirect(f"/{id}")
+    
+
+class SearchView(View):
+    def get(self,request):
+        msg = request.GET.get("msg")
+        term = request.GET.get("term")
+
+        news = News.objects.filter(title__icontains=term)
+        return render(request,'index.html',{'all_news':news,'msg':msg})
+
+
+@method_decorator(login_required,name='dispatch')
+class DeleteCommentView(View):
+    def get(self,request,id):
+        comment = Comment.objects.get(id=id)
+        post_id = comment.news.id
+        comment.delete()
+        return redirect(f"/{post_id}")
+    
+
+@method_decorator(login_required,name='dispatch')
+class DeletePostView(View):
+    def get(self,request,id):
+        News.objects.get(id=id).delete()
+        return redirect("/accounts/profile")
         
     
 

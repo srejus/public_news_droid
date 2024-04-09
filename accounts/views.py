@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import *
+from news.models import News
 
 # Create your views here.
 
@@ -81,6 +82,36 @@ class ProfileView(View):
     def get(self,request):
         try:
             acc = Account.objects.get(user=request.user)
+            if acc.user_type == 'reporter':
+                posts = News.objects.filter(posted_by=acc).order_by('-id')
+            else:
+                posts = []
         except Account.DoesNotExist:
             return redirect("/")
-        return render(request,'profile.html',{'acc':acc})
+        return render(request,'profile.html',{'acc':acc,'posts':posts})
+    
+
+@method_decorator(login_required, name='dispatch')
+class EditProfileView(View):
+    def get(self,request):
+        try:
+            acc = Account.objects.get(user=request.user)
+        except Account.DoesNotExist:
+            return redirect("/")
+        return render(request,'edit_profile.html',{'acc':acc})
+
+
+    def post(self,request):
+        full_name = request.POST.get('full_name')
+        phone_number = request.POST.get('phone_number')
+        email = request.POST.get('email')
+        pincode = request.POST.get('pincode')
+
+        acc = Account.objects.get(user=request.user)
+
+        acc.full_name = full_name
+        acc.email = email
+        acc.pincode = pincode
+        acc.phone = phone_number
+        acc.save()
+        return redirect("/accounts/profile")

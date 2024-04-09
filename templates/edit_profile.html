@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta value="{{acc.viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
     <!-- Site Metas -->
-    <title>Public News Droid | {{news.title}}</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>Public News Droid | Edit Profile</title>
+    <meta value="{{acc.keywords" content="">
+    <meta value="{{acc.description" content="">
+    <meta value="{{acc.author" content="">
     
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
@@ -31,6 +31,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'style.css' %}" rel="stylesheet">
+    <link href="{% static 'form.css' %}" rel="stylesheet">
 
     <!-- Responsive styles for this template -->
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet">
@@ -57,7 +58,7 @@
             <div class="card card-block">
                 <div class="newsletter-widget text-center">
                     <form class="form-inline">
-                        <input type="text" class="form-control" placeholder="What you are looking for?">
+                        <input readonly type="text" class="form-control" placeholder="What you are looking for?">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                     </form>
                 </div><!-- end newsletter -->
@@ -82,7 +83,6 @@
                     <div class="col-lg-4 hidden-md-down">
                         <div class="topmenu text-center">
                             <ul class="list-inline">
-                               
                                 <li class="list-inline-item"><a href="#"><i class="fa fa-bolt"></i> Hot Topics</a></li>
                                 <li class="list-inline-item"><a href="/news/post"><i class="fa fa-pencil"></i> Write for us</a></li>
 <li class="list-inline-item"><a href="/accounts/profile"><i class="fa fa-user-circle-o"></i> Profile</a></li>
@@ -91,8 +91,7 @@
                                 <li class="list-inline-item"><a href="/accounts/logout"><i class="fa fa-sign-in"></i> Logout</a></li>
                                 {% else %}
                                 <li class="list-inline-item"><a href="/accounts/login/"><i class="fa fa-sign-in"></i> Login</a></li>
-                                {% endif %}
-                            </ul><!-- end ul -->
+                                {% endif %}                            </ul><!-- end ul -->
                         </div><!-- end topmenu -->
                     </div><!-- end col -->
 
@@ -150,58 +149,33 @@
                 
                 <hr class="invis1">
 
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="blog-list clearfix">
-                            <div class="section-title">
-                            </div><!-- end title -->
+                
+                    <div>
+                        <h2 style="text-align: center;"><b>Edit Profile</b></h2>
+                         <form action="" method="POST">
+                            {% csrf_token %}
+                            <input name="full_name" type="text" placeholder="Enter Full Name*" class="form-control" value="{{acc.full_name}}" required><br>
+                            <input name="phone_number" type="number" placeholder="Enter Phone Number*" class="form-control" value="{{acc.phone}}" required><br>
+                            <input name="email" type="email" placeholder="Enter Email*" class="form-control" value="{{acc.email}}" required><br>
 
-                            <div class="blog-box row">
-                                <div class="col-md-4">
-                                  
-                                </div><!-- end col -->
+                            <input name="pincode" type="number" placeholder="Enter Pincode" class="form-control" value="{{acc.pincode}}"><br>
+                            
+                            <button class="btn btn-primary">Update Profile</button>
+                        </form>
 
-                                <div class="blog-meta big-meta col-md-8">
-                                    <h4 style="margin-left: -25px;font-size: 55px;font-weight: 800;">{{news.title}}</h4><br>
-                                    <img src="/static/images/{{news.news_cover_img}}" style="width: 100%;" alt=""><br><br>
-                                    <p>{{news.content}}</p>
-                                    <small><a  title="">{{news.catgeory}}</a></small>
-                                    <small><a title="">{{news.created_at}}</a></small>
-                                    <small><a title="">by {{news.posted_by.full_name}}</a></small>
-                                    <br><br><br>
-                                    <h3><b>Comments</b></h3><br>
-                                    {% if acc == 'public' %}
 
-                                    <form action="" method="POST">
-                                        {% csrf_token %}
-                                        <input type="text" required name="comment" placeholder="Your Comment....." class="form-control"><br>
-                                        <button class="btn btn-primary">Post</button>
-                                    </form>
+                        {% if err %}
+                        <script>
+                            alert('{{err}}');
+                            window.location.href='/accounts/profile/edit';
+                        </script>
+                        {% endif %}
 
-                                    {% endif %}
 
-                                    {% for comment in comments %}
-                                    <div class="comment-div"><br>
-                                        <p><b>{{comment.commented_by.full_name}} : {{comment.comment}}</b></p>
-                                        <p>{{comment.created_at}}</p>
-
-                                        {% if comment.commented_by == acc%}
-                                        <button onclick="window.location.href='/delete-comment/{{comment.id}}'"
-                                         class="btn btn-danger" style="background-color: red;">Delete Comment</button>
-                                        {% endif %}
-                                    </div>
-                                    <hr>
-                                    {% endfor %}
-                                </div><!-- end meta -->
-                            </div><!-- end blog-box -->
-
-                            <hr class="invis">
-
-                         
-
-                    
-                </div><!-- end row -->
-
+                          <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                
             </div><!-- end container -->
         </section>
@@ -230,7 +204,7 @@
 
                                 <div class="newsletter-widget text-center">
                                     <form class="form-inline">
-                                        <input type="text" class="form-control" placeholder="Enter your email address">
+                                        <input readonly type="text" class="form-control" placeholder="Enter your email address">
                                         <button type="submit" class="btn btn-primary">Subscribe <i class="fa fa-envelope-open-o"></i></button>
                                     </form>
                                 </div><!-- end newsletter -->
