@@ -170,7 +170,7 @@
                                     <small><a title="">by {{news.posted_by.full_name}}</a></small>
                                     <br><br><br>
                                     <h3><b>Comments</b></h3><br>
-                                    {% if acc == 'public' %}
+                                    {% if acc.user_type == 'public' %}
 
                                     <form action="" method="POST">
                                         {% csrf_token %}
