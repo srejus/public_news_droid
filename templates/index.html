@@ -169,6 +169,11 @@
                                     <h4><a href="/{{news.id}}" title="">{{news.title}}</a></h4>
                                     <!-- <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p> -->
                                     <small><a title="">{{news.category}}</a></small>
+                                    {% if news.is_fake %}
+                                    <span class="badge badge-danger">Might be a fake news</span>
+                                    {% else %}
+                                    <span class="badge badge-success p-1">Valid News</span>
+                                    {% endif %}
                                     <small><a title="">{{news.created_at}}</a></small>
                                     <small><a title="">by {{news.posted_by.full_name}}</a></small>
                                 </div><!-- end meta -->
