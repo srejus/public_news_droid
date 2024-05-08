@@ -34,7 +34,7 @@ class IndexView(View):
             return "Correct"
     
     def get(self,request,id=None):
-        news = News.objects.all().order_by('-id')
+        news = News.objects.filter(is_approved=True).order_by('-id')
         if id:
             news = news.get(id=id)
             if request.user.is_authenticated:

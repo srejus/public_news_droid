@@ -10,6 +10,7 @@ class News(models.Model):
     tags = models.TextField(null=True,blank=True)
     catgegory = models.CharField(max_length=100,default='others')
     is_fake = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
     created_at  = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
